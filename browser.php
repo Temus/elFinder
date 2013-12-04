@@ -23,6 +23,7 @@ if(($_GET['editor'] == 'tinymce3' || $_GET['editor'] == 'tinymce') && $_GET['edi
 	$editorPath = htmlspecialchars($_GET['editorpath'], ENT_QUOTES);
 ?>
 		<script type="text/javascript" src="<?php echo $editorPath; ?>/jscripts/tiny_mce/tiny_mce_popup.js"></script>
+		<script type="text/javascript" src="<?php echo $editorPath; ?>/tiny_mce/tiny_mce_popup.js"></script>
 		<script type="text/javascript" src="<?php echo $editorPath; ?>/tinymce.modxfb.js"></script>
 
 		<!-- elFinder initialization (REQUIRED) -->
@@ -35,7 +36,11 @@ if(($_GET['editor'] == 'tinymce3' || $_GET['editor'] == 'tinymce') && $_GET['edi
 					height: $(window).height(),
 					getFileCallback : function(url) {
 						url = url.url.substr(1); // remove slash
-						FileBrowserDialogue.selectURL(url);
+						if (window.FileBrowserDialogue) {
+							FileBrowserDialogue.selectURL(url);
+						}else {
+							window.opener.SetUrl(url);
+						}
 						window.close();
                     }
 				}).elfinder('instance');
