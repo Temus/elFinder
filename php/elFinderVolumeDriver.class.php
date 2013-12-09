@@ -2756,6 +2756,8 @@ abstract class elFinderVolumeDriver {
     	if ($keepProportions == true) {
            
       		list($orig_w, $orig_h, $new_w, $new_h) = array($s[0], $s[1], $width, $height);
+			
+			if ($orig_w < $new_w || $orig_h < $new_h) return false; //Temus
         
       		/* Calculating image scale width and height */
       		$xscale = $orig_w / $new_w;
