@@ -5,8 +5,12 @@ error_reporting(0); // Set E_ALL for debuging
 list($base_url,) = explode('/manager/', $_SERVER['REQUEST_URI']);
 $base_url .= '/';
 define('MODX_BASE_URL', $base_url);
-include_once('../../../../includes/config.inc.php');
-startCMSSession(); 
+define('MODX_API_MODE', true);
+include_once(dirname(__FILE__)."../../../../../../index.php");
+$modx->db->connect();
+if (empty ($modx->config)) {
+    $modx->getSettings();
+}
 if(!isset($_SESSION['mgrValidated'])) {
 	if ($_SERVER['HTTP_X_REQUESTED_WITH'] != 'XMLHttpRequest') 
 		die("<b>INCLUDE_ORDERING_ERROR</b><br /><br />Please use the MODx Content Manager instead of accessing this file directly.");
